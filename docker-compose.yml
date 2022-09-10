@@ -15,6 +15,9 @@ services:
     volumes:
       - ./library_back/postgres:/var/lib/postgres
       - ./library_back/postgres/db.sql:/docker-entrypoint-initdb.d/db.sql
+    
+    networks:
+      - network-api
   
   back:
     build: ./library_back
@@ -26,9 +29,17 @@ services:
 
     depends_on:
       - db
+
     environment:
       - POSTGRES_DB=library_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
+    
+    networks:
+      - network-api
+
+networks:
+  network-api:
+    driver: bridge
