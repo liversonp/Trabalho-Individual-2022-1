@@ -40,6 +40,21 @@ services:
     networks:
       - network-api
 
+  front:
+    build: ./library_front
+    
+    ports:
+      - 3000:3000
+
+    depends_on:
+      - back
+    
+    volumes:
+      - ./library_front:/library_front
+
+    networks:
+      - network-api
+
 networks:
   network-api:
     driver: bridge
